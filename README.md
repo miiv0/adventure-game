@@ -23,6 +23,7 @@ Move using:
 - south or s
 - east or e
 - west or w
+
 Respond to prompts (e.g., "Do you want to go in the door?") with yes or no.
 
 Interact with the AI chatbot in-game for help, tips, or immersive dialogue.
