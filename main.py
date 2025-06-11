@@ -1,6 +1,7 @@
 from ai import speakWithFrank
 from ai import speakWithAlien
 from ai import speakWithOldLady
+import random
 
 
 def main():
@@ -8,6 +9,14 @@ def main():
     visited_locations = set()
     inventory = set()
     mapStatus = set()
+    quitGame = set()
+    messages = [
+                "What did you say?",
+                "Come again?",
+                "Try that again.",
+                "Sorry, one more time.",
+                "Huh?"
+            ]
 
     print("----------------------------------------------------------------------------------")
     print("               --  --  --  --  --  --  --  --  --  --  --  --")
@@ -26,9 +35,14 @@ def main():
 
         if command in ('quit'):        #if player wants to quit game
             print('Are you sure you want to quit the game?')
-            if command in ('yes', 'y'):
+            quitGame.add("imSure")
+
+        if command in ('yes', 'y'):
+            if "imSure" in quitGame:
                 print("\nThank you for playing!\n")
                 break
+            else:
+                print("Huh?")
 
         if command in ('grab', 'take', 'pick up'):       #player grabbing an item
             if (x, y) == (1, 2):
@@ -62,22 +76,87 @@ def main():
                 y -= 1
                 print("You are now back outside.")
 
+        if command in ('talk', 'speak', 'chat', 'frank', 'talk to frank', 'talk with frank', 'talk with old lady', 'talk to old lady', 'talk to alien', 'talk with alien'):
+            if (x, y) == (0, 4):
+                speakWithFrank()
+            elif (x, y) == (4, 14):
+                speakWithOldLady()
+            elif (x, y) == (12, 1):
+                speakWithFrank()
+
         if command in ('north', 'n'):         #player moving north
-            if (x, y + 1) == (0, 1):
+
+            northForestTrees = [(-1, 5), (3, 5), (5, 5), (6, 5)]
+            northForestCabin = [(0, 5), (1, 5), (2, 5)]
+
+            northForestMovement = [(0, 1), (-1, 2), (-1, 4), (4, 1), (6, 1), (4, 2), (5, 2), (5, 4), (6, 4)]
+            northForestMovement2 = [(1, 1), (2, 1), (3, 1), (3, 3), (4, 3), (6, 3), (3, 4)]
+
+            if (x, y + 1) in northForestMovement:
                 y += 1
-                print("You get up and start walking north.")
+                print("You walk north.")
+            elif (x, y + 1) in northForestMovement2:
+                y += 1
+                print("You walk north frolicing through the grass.")
+            elif (x, y + 1) in northForestTrees:
+                print("The thick forest blocks your path.") 
+            elif (x, y + 1) in northForestCabin:
+                print("The cabin walls block your path.")
             elif (x, y + 1) == (0, 2):
                 y += 1
                 print("You continue north until you find a cabin, looking in the window you see a dimly lit room with a man inside.")
+            elif (x, y + 1) == (1, 2):
+                y += 1
+                print("You are outside the cabin, it has a burnt out torch attached to the outside.")
+            elif (x, y + 1) == (2, 2):
+                y += 1
+                print("Moving north you find the door to the cabin.")
             elif (x, y + 1) == (0, 3):
                 print("You cannot walk through the window.")
             elif (x, y + 1) == (1, 3):
                 print("You cannot walk through the wall.")
             elif (x, y + 1) == (2, 3):
                 print("You cannot walk through the door.")
-            elif (x, y + 1) == (1, 2):
+            elif (x, y + 1) == (-1, 1):
                 y += 1
-                print("You run into the cabin, it has a burnt out torch attached to the outside.")
+                print("You move north, encountering a little sleeping cat. He just sits there and looks cute.")
+            elif (x, y + 1) == (-1, 3):
+                y += 1
+                if "waterfall" in inventory:
+                    print("It seems there is an opening that wasn't here before...")
+                else:
+                    print("You walk north.")
+            elif (x, y + 1) == (3, 2):
+                y += 1
+                print('You move north. There is a tree that has a heart carved in the bark with an "F + R" on the inside.')
+            elif (x, y + 1) == (5, 1):
+                y += 1
+                print("You come across a log after you move north. It appears to have a machete loosely stuck in the wood.")
+            elif (x, y + 1) == (5, 3):
+                y += 1
+                print("You move north and spot two trees with a swing for two, how cute.")
+            elif (x, y + 1) == (4, 4):
+                y += 1
+                if "machete" in inventory:
+                    print("You move north. It seems you can cut some small trees to make a path.")
+                else:
+                    print("You move north.")
+            elif (x, y + 1) == (4, 5):
+                if "northForest" in mapStatus:
+                    y += 1
+                    print("You move into the path you made in the trees.")
+                else:
+                    print("The thick forest blocks your path.")
+            elif (x, y + 1) == (2, 4):
+                y += 1
+                print("You move up into the room and look at the bookshelf in the corner of the room, everything looks well dusted.")
+            elif (x, y + 1) == (1, 4):
+                y += 1
+                print("You move north in the room, there is a nice picture of an old man and an old woman, happily in love.")
+            elif (x, y + 1) == (0, 4):
+                y += 1
+                print("You see Frank right in front of you, sitting on his rocking chair minding his own business.")
+            
 
 
         if command in ('east', 'e'):      #player moving east
@@ -88,10 +167,10 @@ def main():
             eastForestMovement2 = [(1, 0), (2, 0), (4, 3), (4, 2), (3, 1), (3, 4), (5, 2), (5, 4), (6, 1)]
 
             if (x + 1, y) in eastForestMovement:
-                x + 1
+                x += 1
                 print("You walk east striding through the grass.")
             elif (x + 1, y) in eastForestMovement2:
-                x + 1
+                x += 1
                 print("You walk east.")
             elif (x + 1, y) in eastForestTrees:
                 print("The thick forest blocks your path.")
@@ -117,7 +196,7 @@ def main():
             elif (x + 1, y) == (3, 0):
                 x += 1
                 print("You move east. You stop and see a big tree with a friendly face on it, looks like someone likes decorating.")
-            elif (x + 1, y) == (2, 3):
+            elif (x + 1, y) == (3, 2):
                 x += 1  
                 print('You move east. There is a tree that has a heart carved in the bark with an "F + R" on the inside.')
             elif (x + 1, y) == (5, 1):
@@ -126,14 +205,14 @@ def main():
             elif (x + 1, y) == (4, 4):
                 x += 1
                 if "machete" in inventory:
-                    print("You move east. It seems you now can cut some small trees to make a path.")
+                    print("You move east. It seems you can cut some small trees to make a path.")
                 else:
                     print("You walk east striding through the grass.")
             elif (x + 1, y) == (5, 3):
                 x += 1
                 print("You move east and spot two trees with a swing for two, how cute.")
             
-            
+
         if command in ('south', 's'):        #player moving south
 
             southForestTrees = [(-1, -1), (1, -1), (2, -1), (3, -1), (4, -1), (5, -1), (6, -1)]
@@ -167,7 +246,7 @@ def main():
             elif (x, y - 1) == (3, 0):
                 y -= 1
                 print("You move south. You stop and see a big tree with a friendly face on it, looks like someone likes decorating.")
-            elif (x, y - 1) == (2, 3):
+            elif (x, y - 1) == (3, 2):
                 y -= 1
                 print('You move south. There is a tree that has a heart carved in the bark with an "F + R" on the inside.')
             elif (x, y - 1) == (5, 3):
@@ -176,7 +255,12 @@ def main():
             elif (x, y - 1) == (5, 1):
                 y -= 1
                 print("You come across a log after you move south. It appears to have a machete loosely stuck in the wood.")
+            elif (x, y - 1) == (-1, 1):
+                y -= 1
+                print("You move south, encountering a little sleeping cat. He just sits there and looks cute.")
 
 
+        
             
+
 main()
