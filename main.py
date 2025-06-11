@@ -72,6 +72,11 @@ def main():
 
             eastForestTrees = [()]
 
+            eastForestMovement = [()]
+
+            if (x + 1, y) in eastForestMovement:
+                x + 1
+                print("You walk east striding through the grass.")
             if (x + 1, y) == (1, 0):
                 x += 1
                 print("Something seems eerie about this forest, but its also peaceful. You move east.")
@@ -89,11 +94,15 @@ def main():
 
             southForestTrees = [(-1, -1), (1, -1), (2, -1), (3, -1), (4, -1), (5, -1), (6, -1)]
 
-            southForestMovement = [(-1, 2), (-1, 0), (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (1, 0), (2, 0), (4, 0), (5, 0), (6, 0), (6, 1), (6, 3), (5, 2), (4, 2), (4, 3), (3, 3)]
+            southForestMovement = [(-1, 2), (-1, 0),  (3, 1), (4, 1), (1, 0), (5, 2), (4, 2), (4, 3), (3, 3)]
+            southForestMovement2 = [(0, 1), (1, 1), (5, 0), (6, 0), (6, 3), (2, 1), (2, 0), (4, 0), (6, 1)]
 
             if (x, y - 1) in southForestMovement:
                 y -= 1
-                print("You walk south through the grass.")
+                print("You walk south through some grass.")
+            if (x, y - 1) in southForestMovement2:
+                y -= 1
+                print("You walk south")
 
             elif (x, y - 1) in southForestTrees:
                 print("The thick forest blocks your path")
